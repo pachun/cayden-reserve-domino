@@ -1,6 +1,6 @@
 import React from "react"
 import { StatusBar } from "expo-status-bar"
-import { FlatList, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import Domino from "Domino"
 import fullSetOfDominoes, { DominoType } from "fullSetOfDominoes"
 
@@ -9,13 +9,14 @@ const numberOfRandomDominoesNeededForAGame =
   2 * dominoesPerPlayerInATwoPlayerGame
 
 const randomlySortedDominoes: DominoType[] = fullSetOfDominoes
-  .map(domino => [domino, Math.random()])
-  .sort((domino1, domino2) => (domino1[1] < domino2[1] ? 1 : -1))
-  .map(
-    dominoInArrayWithSubsequentRandomNumber =>
-      dominoInArrayWithSubsequentRandomNumber[0],
+  .map(domino => ({ domino, randomNumber: Math.random() }))
+  .sort((dominoWithRandomNumber1, dominoWithRandomNumber2) =>
+    dominoWithRandomNumber1.randomNumber < dominoWithRandomNumber2.randomNumber
+      ? 1
+      : -1,
   )
-  .slice(numberOfRandomDominoesNeededForAGame) as DominoType[] // this sucks.
+  .map(dominoWithRandomNumber => dominoWithRandomNumber.domino)
+  .slice(numberOfRandomDominoesNeededForAGame)
 
 const firstPlayersDominoes = randomlySortedDominoes.slice(
   0,
