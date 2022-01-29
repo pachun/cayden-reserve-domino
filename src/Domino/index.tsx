@@ -2,17 +2,21 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import ThreeDotSide from "./ThreeDotSide"
 import TwoDotSide from "./TwoDotSide"
+import FourDotSide from "./FourDotSide"
+
+{
+  /* transform: [{ rotate: "90deg" }, { scale: 0.5 }], */
+}
 
 const Domino = () => (
   <View
     style={{
       ...styles.container,
-      transform: [{ rotate: "90deg" }, { scale: 0.5 }],
     }}
   >
     <ThreeDotSide />
     <View style={styles.centerDivider} />
-    <TwoDotSide />
+    <FourDotSide />
   </View>
 )
 
