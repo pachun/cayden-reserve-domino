@@ -48,10 +48,30 @@ const state: State = {
 const App = () => {
   return (
     <View style={styles.container}>
-      {state.firstPlayer.dominoes.map(domino => (
-        <Domino domino={domino} />
-      ))}
-      <Domino domino={{ onTop: 6, onBottom: 1 }} scale={0.3} />
+      <View style={{ height: 50 }} />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          width: "100%",
+        }}
+      >
+        {state.firstPlayer.dominoes.map(domino => (
+          <Domino domino={domino} scale={0.5} />
+        ))}
+      </View>
+      <View style={{ height: 50 }} />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          width: "100%",
+        }}
+      >
+        {state.secondPlayer.dominoes.map(domino => (
+          <Domino domino={domino} scale={0.5} />
+        ))}
+      </View>
       <StatusBar style="auto" />
     </View>
   )
@@ -62,9 +82,6 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 100,
     backgroundColor: "#fff",
-    flexDirection: "row",
-    flexWrap: "wrap",
   },
 })
