@@ -6,7 +6,7 @@ import Domino from "Domino"
 const App = () => {
   return (
     <View style={styles.container}>
-      <Domino />
+      <Domino domino={{ onTop: 5, onBottom: 4 }} />
       <StatusBar style="auto" />
     </View>
   )
