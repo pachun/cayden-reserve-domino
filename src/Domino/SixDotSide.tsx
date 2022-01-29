@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import Dot from "./Dot"
 
-const TwoDotSide = () => {
+const SixDotSide = () => {
   return (
     <View style={styles.container}>
       <View style={styles.threeVerticalColumnsWithPaddingContainer}>
@@ -22,7 +22,7 @@ const TwoDotSide = () => {
   )
 }
 
-export default TwoDotSide
+export default SixDotSide
 
 const styles = StyleSheet.create({
   container: {

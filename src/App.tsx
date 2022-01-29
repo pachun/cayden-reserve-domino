@@ -1,6 +1,6 @@
 import React from "react"
 import { StatusBar } from "expo-status-bar"
-import { StyleSheet, View } from "react-native"
+import { FlatList, StyleSheet, View } from "react-native"
 import Domino from "Domino"
 
 const App = () => {
