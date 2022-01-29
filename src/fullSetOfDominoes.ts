@@ -100,7 +100,7 @@ export type FullSetOfDominoes = {
   blankOnTopAndBlankOnBottom: BlankOnTopAndBlankOnBottom
 }
 
-const fullSetOfDominoes: FullSetOfDominoes = {
+const setOfAllDominoes: FullSetOfDominoes = {
   sixOnTopAndSixOnBottom: { onTop: 6, onBottom: 6 },
   sixOnTopAndFiveOnBottom: { onTop: 6, onBottom: 5 },
   sixOnTopAndFourOnBottom: { onTop: 6, onBottom: 4 },
@@ -136,5 +136,7 @@ const fullSetOfDominoes: FullSetOfDominoes = {
 
   blankOnTopAndBlankOnBottom: { onTop: 0, onBottom: 0 },
 }
+
+const fullSetOfDominoes: DominoType[] = Object.values(setOfAllDominoes)
 
 export default fullSetOfDominoes
