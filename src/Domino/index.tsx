@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, ViewStyle } from "react-native"
+import { StyleSheet, View } from "react-native"
 import BlankSide from "./BlankSide"
 import OneDotSide from "./OneDotSide"
 import TwoDotSide from "./TwoDotSide"
@@ -21,28 +21,42 @@ const dotNumberToDominoComponent = [
 
 interface DominoProps {
   domino: DominoType
-  dominoStyle?: ViewStyle
+  scale?: number
 }
 
-const Domino = ({ domino, dominoStyle = {} }: DominoProps) => {
-  const topSideComponent = React.useMemo(
-    () => dotNumberToDominoComponent[domino.onTop](),
-    [domino.onTop],
-  )
-  const bottomSideComponent = React.useMemo(
-    () => dotNumberToDominoComponent[domino.onBottom](),
-    [domino.onBottom],
-  )
+const defaultWidth = 100
+const defaultHeight = 200
+const defaultBorderRadius = 10
+const defaultBorderWidth = 3
+const defaultSeparatorWidth = 2
+
+const Domino = ({ domino, scale = 1 }: DominoProps) => {
+  const topSideComponent = React.useMemo(() => {
+    const Component = dotNumberToDominoComponent[domino.onTop]
+    return <Component scale={scale} />
+  }, [domino.onTop, scale])
+  const bottomSideComponent = React.useMemo(() => {
+    const Component = dotNumberToDominoComponent[domino.onBottom]
+    return <Component scale={scale} />
+  }, [domino.onBottom, scale])
 
   return (
     <View
       style={{
         ...styles.container,
-        ...dominoStyle,
+        width: defaultWidth * scale,
+        height: defaultHeight * scale,
+        borderRadius: defaultBorderRadius * scale,
+        borderWidth: defaultBorderWidth * scale,
       }}
     >
       {topSideComponent}
-      <View style={styles.centerDivider} />
+      <View
+        style={{
+          ...styles.centerDivider,
+          height: defaultSeparatorWidth * scale,
+        }}
+      />
       {bottomSideComponent}
     </View>
   )

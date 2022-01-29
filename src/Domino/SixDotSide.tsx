@@ -2,20 +2,31 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import Dot from "./Dot"
 
-const SixDotSide = () => {
+interface DotSideProps {
+  scale?: number
+}
+
+const defaultPadding = 10
+
+const SixDotSide = ({ scale = 1 }: DotSideProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.threeVerticalColumnsWithPaddingContainer}>
+      <View
+        style={{
+          ...styles.threeVerticalColumnsWithPaddingContainer,
+          padding: defaultPadding * scale,
+        }}
+      >
         <View style={styles.bottomAlignedContainer}>
-          <Dot />
-          <Dot />
-          <Dot />
+          <Dot scale={scale} />
+          <Dot scale={scale} />
+          <Dot scale={scale} />
         </View>
         <View style={styles.verticalSeparator} />
         <View style={styles.topAlignedContainer}>
-          <Dot />
-          <Dot />
-          <Dot />
+          <Dot scale={scale} />
+          <Dot scale={scale} />
+          <Dot scale={scale} />
         </View>
       </View>
     </View>

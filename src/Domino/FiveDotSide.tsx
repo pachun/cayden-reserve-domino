@@ -2,20 +2,31 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import Dot from "./Dot"
 
-const FiveDotSide = () => {
+const defaultPadding = 10
+
+interface DotSideProps {
+  scale?: number
+}
+
+const FiveDotSide = ({ scale = 1 }: DotSideProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.threeVerticalColumnsWithPaddingContainer}>
+      <View
+        style={{
+          ...styles.threeVerticalColumnsWithPaddingContainer,
+          padding: defaultPadding * scale,
+        }}
+      >
         <View style={styles.leftColumnContainer}>
-          <Dot />
-          <Dot />
+          <Dot scale={scale} />
+          <Dot scale={scale} />
         </View>
         <View style={styles.centerColumnContainer}>
-          <Dot />
+          <Dot scale={scale} />
         </View>
         <View style={styles.rightColumnContainer}>
-          <Dot />
-          <Dot />
+          <Dot scale={scale} />
+          <Dot scale={scale} />
         </View>
       </View>
     </View>
