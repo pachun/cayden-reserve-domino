@@ -19,16 +19,16 @@ const dotNumberToDominoComponent = [
   SixDotSide,
 ]
 
-interface DominoProps {
-  domino: DominoType
-  scale?: number
-}
-
 const defaultWidth = 100
 const defaultHeight = 200
 const defaultBorderRadius = 10
 const defaultBorderWidth = 3
 const defaultSeparatorWidth = 2
+
+interface DominoProps {
+  domino: DominoType
+  scale?: number
+}
 
 const Domino = ({ domino, scale = 1 }: DominoProps) => {
   const topSideComponent = React.useMemo(() => {
@@ -66,15 +66,10 @@ export default Domino
 
 const styles = StyleSheet.create({
   container: {
-    width: 100,
-    height: 200,
-    borderRadius: 10,
-    borderWidth: 3,
     borderColor: "#bbb",
     justifyContent: "space-between",
   },
   centerDivider: {
-    height: 2,
     width: "100%",
     backgroundColor: "#bbb",
   },
