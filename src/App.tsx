@@ -51,7 +51,7 @@ const App = () => {
       {state.firstPlayer.dominoes.map(domino => (
         <Domino domino={domino} />
       ))}
-      <Domino domino={{ onTop: 6, onBottom: 5 }} scale={0.3} />
+      <Domino domino={{ onTop: 6, onBottom: 1 }} scale={0.3} />
       <StatusBar style="auto" />
     </View>
   )

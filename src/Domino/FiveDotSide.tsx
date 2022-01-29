@@ -1,12 +1,8 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import Dot from "./Dot"
-
-const defaultPadding = 10
-
-interface DotSideProps {
-  scale?: number
-}
+import { DotSideProps } from "./dotSideProps"
+import defaultDotSidePadding from "./defaultDotSidePadding"
 
 const FiveDotSide = ({ scale = 1 }: DotSideProps) => {
   return (
@@ -14,7 +10,7 @@ const FiveDotSide = ({ scale = 1 }: DotSideProps) => {
       <View
         style={{
           ...styles.threeVerticalColumnsWithPaddingContainer,
-          padding: defaultPadding * scale,
+          padding: defaultDotSidePadding * scale,
         }}
       >
         <View style={styles.leftColumnContainer}>
@@ -41,7 +37,6 @@ const styles = StyleSheet.create({
   },
   threeVerticalColumnsWithPaddingContainer: {
     flex: 1,
-    padding: 10,
     flexDirection: "row",
   },
   leftColumnContainer: {

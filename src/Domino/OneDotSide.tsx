@@ -1,11 +1,12 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import Dot from "./Dot"
+import { DotSideProps } from "./dotSideProps"
 
-const OneDotSide = () => {
+const OneDotSide = ({ scale = 1 }: DotSideProps) => {
   return (
     <View style={styles.container}>
-      <Dot />
+      <Dot scale={scale} />
     </View>
   )
 }
