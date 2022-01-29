@@ -2,11 +2,11 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import Dot from "./Dot"
 
+const defaultPadding = 10
+
 interface DotSideProps {
   scale?: number
 }
-
-const defaultPadding = 10
 
 const SixDotSide = ({ scale = 1 }: DotSideProps) => {
   return (
