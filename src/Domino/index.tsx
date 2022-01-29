@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, View, ViewStyle } from "react-native"
 import BlankSide from "./BlankSide"
 import OneDotSide from "./OneDotSide"
 import TwoDotSide from "./TwoDotSide"
@@ -21,9 +21,10 @@ const dotNumberToDominoComponent = [
 
 interface DominoProps {
   domino: DominoType
+  dominoStyle?: ViewStyle
 }
 
-const Domino = ({ domino }: DominoProps) => {
+const Domino = ({ domino, dominoStyle = {} }: DominoProps) => {
   const topSideComponent = React.useMemo(
     () => dotNumberToDominoComponent[domino.onTop](),
     [domino.onTop],
@@ -37,6 +38,7 @@ const Domino = ({ domino }: DominoProps) => {
     <View
       style={{
         ...styles.container,
+        ...dominoStyle,
       }}
     >
       {topSideComponent}

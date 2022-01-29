@@ -60,9 +60,9 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 100,
+    paddingTop: 100,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 })
