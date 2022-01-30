@@ -17,8 +17,13 @@ const PlayersDominoes = ({ dominoes, hidden }: PlayersDominoesProps) => {
         width: "100%",
       }}
     >
-      {dominoes.map(domino => (
-        <Domino domino={domino} scale={0.3} hidden={hidden} />
+      {dominoes.map((domino, position) => (
+        <Domino
+          domino={domino}
+          scale={0.3}
+          hidden={hidden}
+          key={position.toString()}
+        />
       ))}
     </View>
   )
