@@ -1,12 +1,8 @@
 import fullSetOfDominoes, { DominoType } from "fullSetOfDominoes"
 
-export interface TwoPlayerGame {
-  firstPlayer: {
-    dominoes: DominoType[]
-  }
-  secondPlayer: {
-    dominoes: DominoType[]
-  }
+export interface TwoPlayerGameType {
+  playersDominoes: DominoType[]
+  opponentsDominoes: DominoType[]
 }
 
 const dominoesPerPlayerInATwoPlayerGame = 7
@@ -26,25 +22,21 @@ const getRandomlySortedDominoes = (): DominoType[] =>
     .map(dominoWithRandomNumber => dominoWithRandomNumber.domino)
     .slice(numberOfRandomDominoesNeededForAGame)
 
-const newTwoPlayerGame = (): TwoPlayerGame => {
+const newTwoPlayerGame = (): TwoPlayerGameType => {
   const randomlySortedDominoes = getRandomlySortedDominoes()
 
-  const firstPlayersDominoes = randomlySortedDominoes.slice(
+  const playersDominoes = randomlySortedDominoes.slice(
     0,
     dominoesPerPlayerInATwoPlayerGame,
   )
 
-  const secondPlayersDominoes = randomlySortedDominoes.slice(
+  const opponentsDominoes = randomlySortedDominoes.slice(
     dominoesPerPlayerInATwoPlayerGame,
   )
 
   return {
-    firstPlayer: {
-      dominoes: firstPlayersDominoes,
-    },
-    secondPlayer: {
-      dominoes: secondPlayersDominoes,
-    },
+    playersDominoes,
+    opponentsDominoes,
   }
 }
 
