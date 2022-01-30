@@ -28,9 +28,10 @@ const defaultSeparatorWidth = 2
 interface DominoProps {
   domino: DominoType
   scale?: number
+  hidden?: boolean
 }
 
-const Domino = ({ domino, scale = 1 }: DominoProps) => {
+const Domino = ({ domino, scale = 1, hidden = false }: DominoProps) => {
   const topSideComponent = React.useMemo(() => {
     const Component = dotNumberToDominoComponent[domino.onTop]
     return <Component scale={scale} />
@@ -39,6 +40,21 @@ const Domino = ({ domino, scale = 1 }: DominoProps) => {
     const Component = dotNumberToDominoComponent[domino.onBottom]
     return <Component scale={scale} />
   }, [domino.onBottom, scale])
+
+  if (hidden) {
+    return (
+      <View
+        style={{
+          ...styles.container,
+          width: defaultWidth * scale,
+          height: defaultHeight * scale,
+          borderRadius: defaultBorderRadius * scale,
+          borderWidth: defaultBorderWidth * scale,
+          backgroundColor: "#bbb",
+        }}
+      />
+    )
+  }
 
   return (
     <View

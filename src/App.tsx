@@ -1,6 +1,7 @@
 import React from "react"
 import { StatusBar } from "expo-status-bar"
 import { StyleSheet, View } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 import newTwoPlayerGame, { TwoPlayerGameType } from "newTwoPlayerGame"
 import TwoPlayerGame from "TwoPlayerGame"
 
@@ -15,8 +16,9 @@ const state: State = {
 const App = () => {
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }} />
-      <TwoPlayerGame game={state.twoPlayerGame} />
+      <SafeAreaProvider>
+        <TwoPlayerGame game={state.twoPlayerGame} />
+      </SafeAreaProvider>
       <StatusBar style="auto" />
     </View>
   )

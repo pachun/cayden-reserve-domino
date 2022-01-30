@@ -5,9 +5,10 @@ import Domino from "Domino"
 
 interface PlayersDominoesProps {
   dominoes: DominoType[]
+  hidden: boolean
 }
 
-const PlayersDominoes = ({ dominoes }: PlayersDominoesProps) => {
+const PlayersDominoes = ({ dominoes, hidden }: PlayersDominoesProps) => {
   return (
     <View
       style={{
@@ -17,7 +18,7 @@ const PlayersDominoes = ({ dominoes }: PlayersDominoesProps) => {
       }}
     >
       {dominoes.map(domino => (
-        <Domino domino={domino} scale={0.5} />
+        <Domino domino={domino} scale={0.3} hidden={hidden} />
       ))}
     </View>
   )
