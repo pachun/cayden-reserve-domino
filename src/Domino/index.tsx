@@ -8,6 +8,7 @@ import FourDotSide from "./FourDotSide"
 import FiveDotSide from "./FiveDotSide"
 import SixDotSide from "./SixDotSide"
 import { DominoType } from "fullSetOfDominoes"
+import Draggable from "Draggable"
 
 const dotNumberToDominoComponent = [
   BlankSide,
@@ -57,24 +58,26 @@ const Domino = ({ domino, scale = 1, hidden = false }: DominoProps) => {
   }
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        width: defaultWidth * scale,
-        height: defaultHeight * scale,
-        borderRadius: defaultBorderRadius * scale,
-        borderWidth: defaultBorderWidth * scale,
-      }}
-    >
-      {topSideComponent}
+    <Draggable>
       <View
         style={{
-          ...styles.centerDivider,
-          height: defaultSeparatorWidth * scale,
+          ...styles.container,
+          width: defaultWidth * scale,
+          height: defaultHeight * scale,
+          borderRadius: defaultBorderRadius * scale,
+          borderWidth: defaultBorderWidth * scale,
         }}
-      />
-      {bottomSideComponent}
-    </View>
+      >
+        {topSideComponent}
+        <View
+          style={{
+            ...styles.centerDivider,
+            height: defaultSeparatorWidth * scale,
+          }}
+        />
+        {bottomSideComponent}
+      </View>
+    </Draggable>
   )
 }
 
@@ -84,6 +87,7 @@ const styles = StyleSheet.create({
   container: {
     borderColor: "#bbb",
     justifyContent: "space-between",
+    backgroundColor: "#fff",
   },
   centerDivider: {
     width: "100%",

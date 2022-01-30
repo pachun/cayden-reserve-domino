@@ -10,6 +10,9 @@ module.exports = function (api) {
           extensions: [".ts", ".tsx"],
         },
       ],
+
+      // needs to be last
+      "react-native-reanimated/plugin",
     ],
   }
 }
