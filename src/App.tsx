@@ -2,47 +2,14 @@ import React from "react"
 import { StatusBar } from "expo-status-bar"
 import { StyleSheet, View } from "react-native"
 import Domino from "Domino"
-import fullSetOfDominoes, { DominoType } from "fullSetOfDominoes"
-
-const dominoesPerPlayerInATwoPlayerGame = 7
-const numberOfRandomDominoesNeededForAGame =
-  2 * dominoesPerPlayerInATwoPlayerGame
-
-const randomlySortedDominoes: DominoType[] = fullSetOfDominoes
-  .map(domino => ({ domino, randomNumber: Math.random() }))
-  .sort((dominoWithRandomNumber1, dominoWithRandomNumber2) =>
-    dominoWithRandomNumber1.randomNumber < dominoWithRandomNumber2.randomNumber
-      ? 1
-      : -1,
-  )
-  .map(dominoWithRandomNumber => dominoWithRandomNumber.domino)
-  .slice(numberOfRandomDominoesNeededForAGame)
-
-const firstPlayersDominoes = randomlySortedDominoes.slice(
-  0,
-  dominoesPerPlayerInATwoPlayerGame,
-)
-
-const secondPlayersDominoes = randomlySortedDominoes.slice(
-  dominoesPerPlayerInATwoPlayerGame,
-)
+import newTwoPlayerGame, { TwoPlayerGame } from "./newTwoPlayerGame"
 
 interface State {
-  firstPlayer: {
-    dominoes: DominoType[]
-  }
-  secondPlayer: {
-    dominoes: DominoType[]
-  }
+  twoPlayerGame: TwoPlayerGame
 }
 
 const state: State = {
-  firstPlayer: {
-    dominoes: firstPlayersDominoes,
-  },
-  secondPlayer: {
-    dominoes: secondPlayersDominoes,
-  },
+  twoPlayerGame: newTwoPlayerGame(),
 }
 
 const App = () => {
@@ -56,7 +23,7 @@ const App = () => {
           width: "100%",
         }}
       >
-        {state.firstPlayer.dominoes.map(domino => (
+        {state.twoPlayerGame.firstPlayer.dominoes.map(domino => (
           <Domino domino={domino} scale={0.5} />
         ))}
       </View>
@@ -68,7 +35,7 @@ const App = () => {
           width: "100%",
         }}
       >
-        {state.secondPlayer.dominoes.map(domino => (
+        {state.twoPlayerGame.secondPlayer.dominoes.map(domino => (
           <Domino domino={domino} scale={0.5} />
         ))}
       </View>
