@@ -45,6 +45,7 @@ const Draggable = ({
     startingYPositionInParentComponent,
   )
   const zIndex = useSharedValue(0)
+  const scale = useSharedValue(1)
 
   const bottomBoundaryOnXAxis = -1 * xPositionOfParentComponentInWindow
   const topBoundaryOnXAxis = bottomBoundaryOnXAxis + windowWidth - objectWidth
@@ -62,6 +63,7 @@ const Draggable = ({
       context.yPositionInParentComponentBeforeGesture =
         currentYPositionInParentComponent.value
       zIndex.value = 1
+      scale.value = 1.1
     },
     onActive: (event, context) => {
       currentXPositionInParentComponent.value = clamp(
@@ -84,7 +86,10 @@ const Draggable = ({
         velocity: event.velocityY,
         clamp: [bottomBoundaryOnYAxis, topBoundaryOnYAxis],
       })
+    },
+    onFinish: () => {
       zIndex.value = 0
+      scale.value = 1
     },
   })
   const style = useAnimatedStyle(() => {
@@ -93,6 +98,7 @@ const Draggable = ({
       transform: [
         { translateX: currentXPositionInParentComponent.value },
         { translateY: currentYPositionInParentComponent.value },
+        { scale: scale.value },
       ],
     }
   })
