@@ -18,7 +18,15 @@ const App = () => {
   return (
     <View style={styles.container}>
       <SafeAreaProvider>
-        <Domino domino={{ onTop: 6, onBottom: 2 }} />
+        <View style={{ flex: 1, backgroundColor: "green" }} />
+        <View
+          style={{ flex: 1, backgroundColor: "orange", flexDirection: "row" }}
+        >
+          <View style={{ flex: 1 }} />
+          <View style={{ flex: 1, backgroundColor: "blue" }}>
+            <Domino domino={{ onTop: 6, onBottom: 2 }} />
+          </View>
+        </View>
       </SafeAreaProvider>
       <StatusBar style="auto" />
     </View>

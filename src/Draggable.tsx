@@ -10,58 +10,79 @@ import Animated, {
   withDecay,
 } from "react-native-reanimated"
 import { clamp } from "react-native-redash"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const windowWidth = Dimensions.get("window").width
 const windowHeight = Dimensions.get("window").height
 
 type MyAnimatedContext = {
-  currentX: number
-  currentY: number
+  xPositionInParentComponentBeforeGesture: number
+  yPositionInParentComponentBeforeGesture: number
 }
 
 interface DraggableProps {
   objectWidth: number
   objectHeight: number
+  startingXPositionInParentComponent: number
+  startingYPositionInParentComponent: number
+  xPositionOfParentComponentInWindow: number
+  yPositionOfParentComponentInWindow: number
   children: React.ReactElement
 }
 
-const Draggable = ({ children, objectWidth, objectHeight }: DraggableProps) => {
-  const insets = useSafeAreaInsets()
-  const xBoundary = windowWidth - objectWidth
-  const yBoundary = windowHeight - objectHeight
-  const translateX = useSharedValue(0)
-  const translateY = useSharedValue(insets.top)
+const Draggable = ({
+  children,
+  objectWidth,
+  objectHeight,
+  startingXPositionInParentComponent,
+  startingYPositionInParentComponent,
+  xPositionOfParentComponentInWindow,
+  yPositionOfParentComponentInWindow,
+}: DraggableProps) => {
+  const currentXPositionInParentComponent = useSharedValue(
+    startingXPositionInParentComponent,
+  )
+  const currentYPositionInParentComponent = useSharedValue(
+    startingYPositionInParentComponent,
+  )
   const zIndex = useSharedValue(0)
+
+  const bottomBoundaryOnXAxis = -1 * xPositionOfParentComponentInWindow
+  const topBoundaryOnXAxis = bottomBoundaryOnXAxis + windowWidth - objectWidth
+
+  const bottomBoundaryOnYAxis = -1 * yPositionOfParentComponentInWindow
+  const topBoundaryOnYAxis = bottomBoundaryOnYAxis + windowHeight - objectHeight
+
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     MyAnimatedContext
   >({
     onStart: (_event, context) => {
-      context.currentX = translateX.value
-      context.currentY = translateY.value
+      context.xPositionInParentComponentBeforeGesture =
+        currentXPositionInParentComponent.value
+      context.yPositionInParentComponentBeforeGesture =
+        currentYPositionInParentComponent.value
       zIndex.value = 1
     },
     onActive: (event, context) => {
-      translateX.value = clamp(
-        context.currentX + event.translationX,
-        0,
-        xBoundary,
+      currentXPositionInParentComponent.value = clamp(
+        context.xPositionInParentComponentBeforeGesture + event.translationX,
+        bottomBoundaryOnXAxis,
+        topBoundaryOnXAxis,
       )
-      translateY.value = clamp(
-        context.currentY + event.translationY,
-        insets.top,
-        yBoundary - insets.bottom,
+      currentYPositionInParentComponent.value = clamp(
+        context.yPositionInParentComponentBeforeGesture + event.translationY,
+        bottomBoundaryOnYAxis,
+        topBoundaryOnYAxis,
       )
     },
     onEnd: event => {
-      translateX.value = withDecay({
+      currentXPositionInParentComponent.value = withDecay({
         velocity: event.velocityX,
-        clamp: [0, xBoundary],
+        clamp: [bottomBoundaryOnXAxis, topBoundaryOnXAxis],
       })
-      translateY.value = withDecay({
+      currentYPositionInParentComponent.value = withDecay({
         velocity: event.velocityY,
-        clamp: [insets.top, yBoundary - insets.bottom],
+        clamp: [bottomBoundaryOnYAxis, topBoundaryOnYAxis],
       })
       zIndex.value = 0
     },
@@ -70,8 +91,8 @@ const Draggable = ({ children, objectWidth, objectHeight }: DraggableProps) => {
     return {
       zIndex: zIndex.value,
       transform: [
-        { translateX: translateX.value },
-        { translateY: translateY.value },
+        { translateX: currentXPositionInParentComponent.value },
+        { translateY: currentYPositionInParentComponent.value },
       ],
     }
   })

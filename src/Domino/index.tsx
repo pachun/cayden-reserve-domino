@@ -42,8 +42,30 @@ const Domino = ({ domino, scale = 1, hidden = false }: DominoProps) => {
     return <Component scale={scale} />
   }, [domino.onBottom, scale])
 
-  const dominoWidth = defaultWidth * scale
-  const dominoHeight = defaultHeight * scale
+  const objectRef = React.useRef<View>(null)
+
+  const [
+    startingXPositionInParentComponent,
+    setStartingXPositionInParentComponent,
+  ] = React.useState<number>(0)
+  const [
+    startingYPositionInParentComponent,
+    setStartingYPositionInParentComponent,
+  ] = React.useState<number>(0)
+  const [
+    xPositionOfParentComponentInWindow,
+    setXPositionOfParentComponentInWindow,
+  ] = React.useState<number>(0)
+  const [
+    yPositionOfParentComponentInWindow,
+    setYPositionOfParentComponentInWindow,
+  ] = React.useState<number>(0)
+  const [dominoWidth, setDominoWidth] = React.useState<number>(
+    defaultWidth * scale,
+  )
+  const [dominoHeight, setDominoHeight] = React.useState<number>(
+    defaultHeight * scale,
+  )
 
   if (hidden) {
     return (
@@ -61,8 +83,43 @@ const Domino = ({ domino, scale = 1, hidden = false }: DominoProps) => {
   }
 
   return (
-    <Draggable objectWidth={dominoWidth} objectHeight={dominoHeight}>
+    <Draggable
+      objectWidth={dominoWidth}
+      objectHeight={dominoHeight}
+      startingXPositionInParentComponent={startingXPositionInParentComponent}
+      startingYPositionInParentComponent={startingYPositionInParentComponent}
+      xPositionOfParentComponentInWindow={xPositionOfParentComponentInWindow}
+      yPositionOfParentComponentInWindow={yPositionOfParentComponentInWindow}
+    >
       <View
+        ref={objectRef}
+        onLayout={() => {
+          objectRef.current?.measure(
+            (
+              startingXPositionInParentComponent,
+              startingYPositionInParentComponent,
+              objectWidth,
+              objectHeight,
+              xPositionOfParentComponentInWindow,
+              yPositionOfParentComponentInWindow,
+            ) => {
+              setStartingXPositionInParentComponent(
+                startingXPositionInParentComponent,
+              )
+              setStartingYPositionInParentComponent(
+                startingYPositionInParentComponent,
+              )
+              setDominoWidth(objectWidth)
+              setDominoHeight(objectHeight)
+              setXPositionOfParentComponentInWindow(
+                xPositionOfParentComponentInWindow,
+              )
+              setYPositionOfParentComponentInWindow(
+                yPositionOfParentComponentInWindow,
+              )
+            },
+          )
+        }}
         style={{
           ...styles.container,
           width: defaultWidth * scale,
