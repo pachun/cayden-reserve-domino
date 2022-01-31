@@ -9,17 +9,11 @@ import Animated, {
   useAnimatedStyle,
   withDecay,
 } from "react-native-reanimated"
-import { withBouncing } from "react-native-redash"
-
-const clamp = (value: number, lowerBound: number, upperBound: number) => {
-  "worklet"
-  return Math.min(Math.max(lowerBound, value), upperBound)
-}
+import { clamp } from "react-native-redash"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const windowWidth = Dimensions.get("window").width
 const windowHeight = Dimensions.get("window").height
-const objectWidth = 300
-const objectHeight = 150
 
 type MyAnimatedContext = {
   currentX: number
@@ -27,14 +21,17 @@ type MyAnimatedContext = {
 }
 
 interface DraggableProps {
+  objectWidth: number
+  objectHeight: number
   children: React.ReactElement
 }
 
-const Draggable = ({ children }: DraggableProps) => {
+const Draggable = ({ children, objectWidth, objectHeight }: DraggableProps) => {
+  const insets = useSafeAreaInsets()
   const xBoundary = windowWidth - objectWidth
   const yBoundary = windowHeight - objectHeight
   const translateX = useSharedValue(0)
-  const translateY = useSharedValue(0)
+  const translateY = useSharedValue(insets.top)
   const zIndex = useSharedValue(0)
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -46,15 +43,25 @@ const Draggable = ({ children }: DraggableProps) => {
       zIndex.value = 1
     },
     onActive: (event, context) => {
-      translateX.value = context.currentX + event.translationX
-      translateY.value = context.currentY + event.translationY
+      translateX.value = clamp(
+        context.currentX + event.translationX,
+        0,
+        xBoundary,
+      )
+      translateY.value = clamp(
+        context.currentY + event.translationY,
+        insets.top,
+        yBoundary - insets.bottom,
+      )
     },
     onEnd: event => {
       translateX.value = withDecay({
         velocity: event.velocityX,
+        clamp: [0, xBoundary],
       })
       translateY.value = withDecay({
         velocity: event.velocityY,
+        clamp: [insets.top, yBoundary - insets.bottom],
       })
       zIndex.value = 0
     },

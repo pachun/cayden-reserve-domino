@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import newTwoPlayerGame, { TwoPlayerGameType } from "newTwoPlayerGame"
 import TwoPlayerGame from "TwoPlayerGame"
+import Domino from "./Domino"
 
 interface State {
   twoPlayerGame: TwoPlayerGameType
@@ -17,7 +18,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <SafeAreaProvider>
-        <TwoPlayerGame game={state.twoPlayerGame} />
+        <Domino domino={{ onTop: 6, onBottom: 2 }} />
       </SafeAreaProvider>
       <StatusBar style="auto" />
     </View>

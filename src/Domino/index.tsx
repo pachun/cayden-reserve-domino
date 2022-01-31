@@ -42,13 +42,16 @@ const Domino = ({ domino, scale = 1, hidden = false }: DominoProps) => {
     return <Component scale={scale} />
   }, [domino.onBottom, scale])
 
+  const dominoWidth = defaultWidth * scale
+  const dominoHeight = defaultHeight * scale
+
   if (hidden) {
     return (
       <View
         style={{
           ...styles.container,
-          width: defaultWidth * scale,
-          height: defaultHeight * scale,
+          width: dominoWidth,
+          height: dominoHeight,
           borderRadius: defaultBorderRadius * scale,
           borderWidth: defaultBorderWidth * scale,
           backgroundColor: "#bbb",
@@ -58,7 +61,7 @@ const Domino = ({ domino, scale = 1, hidden = false }: DominoProps) => {
   }
 
   return (
-    <Draggable>
+    <Draggable objectWidth={dominoWidth} objectHeight={dominoHeight}>
       <View
         style={{
           ...styles.container,
